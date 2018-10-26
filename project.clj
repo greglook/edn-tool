@@ -1,0 +1,11 @@
+(defproject mvxcvi/edn-tool "0.1.0-SNAPSHOT"
+  :description "Command-line EDN printing tool."
+  :url "https://github.com/greglook/edn-tool"
+  :license {:name "Public Domain"
+            :url "http://unlicense.org/"}
+
+  :pedantic? :abort
+
+  :dependencies
+  [[org.clojure/clojure "1.9.0"]
+   [mvxcvi/puget "1.0.2"]])
