@@ -8,4 +8,13 @@
 
   :dependencies
   [[org.clojure/clojure "1.9.0"]
-   [mvxcvi/puget "1.0.2"]])
+   [org.clojure/tools.cli "0.4.1"]
+   [mvxcvi/puget "1.0.2"]]
+
+  :main mvxcvi.edn.main
+
+  :profiles
+  {:uberjar
+   {:target-path "target/uberjar"
+    :uberjar-name "edn-tool.jar"
+    :aot :all}})
