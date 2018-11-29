@@ -1,8 +1,10 @@
+/dist
 /target
 /classes
 /checkouts
 /.lein-*
 /.nrepl-port
+/edn
 profiles.clj
 build.xml
 pom.xml

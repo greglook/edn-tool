@@ -16,5 +16,5 @@
   :profiles
   {:uberjar
    {:target-path "target/uberjar"
-    :uberjar-name "edn-tool.jar"
+    :uberjar-name "edn.jar"
     :aot :all}})
