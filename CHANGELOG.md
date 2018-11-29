@@ -9,3 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 ...
+
+## 0.1.0 - 2018-11-29
+
+Initial release!
+
+[Unreleased]: https://github.com/greglook/edn-tool/compare/0.1.0...HEAD
