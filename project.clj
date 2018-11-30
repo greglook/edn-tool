@@ -1,4 +1,4 @@
-(defproject mvxcvi/edn-tool "0.1.0"
+(defproject mvxcvi/edn-tool "0.2.0-SNAPSHOT"
   :description "Command-line EDN printing tool."
   :url "https://github.com/greglook/edn-tool"
   :license {:name "Public Domain"
