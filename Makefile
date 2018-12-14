@@ -19,12 +19,12 @@ clean:
 test:
 	lein test
 
-$(uberjar_path): src/*
+$(uberjar_path): src/**/*
 	lein uberjar
 
 uberjar: $(uberjar_path)
 
-edn: $(uberjar_path) $(reflection-config)
+edn: $(uberjar_path)
 	$(GRAAL_PATH)/bin/native-image \
 	    --report-unsupported-elements-at-runtime \
 	    -J-Xms3G -J-Xmx3G \
