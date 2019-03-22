@@ -41,7 +41,15 @@
     (merge
       default-config
       (when (.exists config-file)
-        (edn/read-string (slurp config-file)))
+        (try
+          (edn/read-string (slurp config-file))
+          (catch Exception ex
+            (binding [*out* *err*]
+              (printf "WARNING: failed to load configuration from %s: %s\n"
+                      (:config options)
+                      (.getMessage ex))
+              (flush))
+            nil)))
       (when-let [width (:width options)]
         {:width width})
       (when (:no-color options)
