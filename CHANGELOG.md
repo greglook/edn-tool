@@ -8,6 +8,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+- Allow printer options to be customized using a user-level config file.
+
 ### Changed
 - Upgraded `mvxcvi/puget` to 1.1.1.
 

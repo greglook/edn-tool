@@ -24,6 +24,21 @@ $ echo "{:foo 123, :bar true}" | edn --width 10
 ```
 
 
+## Configuration
+
+Under the hood, this tool uses [Puget](https://github.com/greglook/puget) to
+pretty-print the output. The printer options may be customized by specifying a
+configuration file with `--config` or dropping one in the default location in
+your home directory. This should be an EDN file giving a map of printer options;
+for example, to customize the coloring of `nil` values and enable namespaced
+maps:
+
+```clojure
+{:namespace-maps true
+ :color-scheme {:nil [:blue]}}
+```
+
+
 ## License
 
 This is free and unencumbered software released into the public domain.
