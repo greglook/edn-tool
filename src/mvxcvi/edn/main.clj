@@ -1,4 +1,5 @@
 (ns mvxcvi.edn.main
+  "Main tool entry namespace."
   (:gen-class)
   (:require
     [clojure.edn :as edn]
@@ -68,7 +69,7 @@
           (let [value (edn/read {:eof sentinel
                                  :default tagged-literal}
                                 input)]
-            (when (not= sentinel value)
+            (when-not (identical? sentinel value)
               (puget/render-out printer value)
               (flush)
               (recur)))))
