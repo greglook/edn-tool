@@ -8,26 +8,51 @@
     [puget.printer :as puget])
   (:import
     (java.io
+      File
       PushbackReader
       Writer)))
 
 
-; TODO: way to customize puget options?
+(def default-config
+  {:width 120
+   :print-color true
+   :sort-keys 100})
+
+
 (def cli-options
+  "Command-line option specs for the tool."
   [["-i" "--input FILE" "Read input from the given file instead of STDIN"]
    ["-o" "--output FILE" "Write output to the given file instead of STDOUT"]
    [nil  "--no-color" "Don't output in color"]
    ["-w" "--width SIZE" "Column at which to wrap print output"
-    :default 200
     :parse-fn #(Integer/parseInt %)]
+   ["-c" "--config FILE" "Path to configuration file to use"
+    :default (str (or (System/getenv "XDG_CONFIG_HOME")
+                      (str (System/getenv "HOME") "/.config"))
+                  "/mvxcvi/edn-tool.edn")]
    ["-h" "--help" "Show help"]])
+
+
+(defn- load-config
+  "Read the tool configuration using the given options and return a printer
+  configuration map."
+  [options]
+  (let [config-file (io/file (:config options))]
+    (merge
+      default-config
+      (when (.exists config-file)
+        (edn/read-string (slurp config-file)))
+      (when-let [width (:width options)]
+        {:width width})
+      (when (:no-color options)
+        {:print-color false}))))
 
 
 (defn- read-print-loop
   "Read EDN from the input reader until the end of the stream is reached,
   printing it to the output writer. Closes the output stream at the end of the
   loop."
-  [input printer output]
+  [input printer ^Writer output]
   (let [sentinel (Object.)]
     (try
       (binding [*out* output]
@@ -40,8 +65,8 @@
               (flush)
               (recur)))))
       (finally
-        (when (not= output *out*)
-          (.close ^java.io.Writer output))))))
+        (when-not (identical? output *out*)
+          (.close output))))))
 
 
 (defn -main
@@ -59,10 +84,7 @@
       (println summary)
       (flush)
       (System/exit 0))
-    (let [printer (puget/pretty-printer
-                    {:width (:width options)
-                     :print-color (not (:no-color options))
-                     :sort-keys 100})
+    (let [printer (puget/pretty-printer (load-config options))
           input (if-let [path (:input options)]
                   (PushbackReader. (io/reader (io/file path)))
                   *in*)
